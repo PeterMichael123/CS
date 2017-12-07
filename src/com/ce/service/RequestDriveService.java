@@ -17,7 +17,6 @@ import com.ce.model.RequestDrive;
 public class RequestDriveService implements IRequestDriveService{
 	private IRequestDriveDao requestDriveDao;
 	
-	
 	public int saveRquest(String userName, String phoneNumber, String carModel, String seller, String bookTime ){
 		requestDriveDao.saveRequest(userName, phoneNumber, carModel, seller, bookTime);
 		return 0;

@@ -7,5 +7,5 @@ import com.ce.model.Seller;
 import com.ce.model.User;
 
 public interface ISellerDao extends IBaseDao<Seller> {
-	ArrayList<Seller> loadByCarModel(String carModel);
+	public ArrayList<Seller> getSellerList();
 }

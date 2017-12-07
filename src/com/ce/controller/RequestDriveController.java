@@ -26,13 +26,33 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ce.model.RequestDrive;
 import com.ce.model.User;
+import com.ce.service.ICarModelService;
 import com.ce.service.IRequestDriveService;
+import com.ce.service.ISellerService;
 import com.ce.service.IUserService;
 
 @Controller
 @RequestMapping(value="/mobile")
 public class RequestDriveController {
+		private ICarModelService carModelService;
+		private ISellerService sellerService;
 		private IRequestDriveService requestDriveService;
+		
+		public ICarModelService getCarModelService() {
+			return carModelService;
+		}
+		@Resource
+		public void setCarModelService(ICarModelService carModelService) {
+			this.carModelService = carModelService;
+		}
+		public ISellerService getSellerService() {
+			return sellerService;
+		}
+		@Resource
+		public void setSellerService(ISellerService sellerService) {
+			this.sellerService = sellerService;
+		}
+		
 		public IRequestDriveService getRequestDriveService() {
 			return requestDriveService;
 		}
@@ -116,7 +136,9 @@ public class RequestDriveController {
         @ModelAttribute("sellerList")
         public Map<String, String> getsellerList()
         {
+        	
            Map<String, String> sellerList = new HashMap<String, String>();
+           
            sellerList.put("US", "United States");
            sellerList.put("CH", "China");
            return sellerList;
@@ -131,4 +153,5 @@ public class RequestDriveController {
            carModelList.put("CH", "China");
            return carModelList;
         }
+
 }
