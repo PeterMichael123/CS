@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ce.model.CarModel;
 import com.ce.model.RequestDrive;
+import com.ce.model.Seller;
 import com.ce.model.User;
 import com.ce.service.ICarModelService;
 import com.ce.service.IRequestDriveService;
@@ -64,16 +66,9 @@ public class RequestDriveController {
 		//init and input
         @RequestMapping(value="/requestdrive", method=RequestMethod.GET)
         public ModelAndView requestdrive() {
-       RequestDrive requestDrive = new RequestDrive();
-       /* 
-        requestDrive.setUserName("please input your name");
-        requestDrive.setPhoneNumber("");
-        requestDrive.setCarModel("Benze");
-        requestDrive.setSeller("123");
-        requestDrive.setBookTime(new Date());
-        requestDrive.setSubmitTime(new Date());*/
-           ModelAndView modelAndView = new ModelAndView("requestbook", "command",requestDrive);
-           return modelAndView;
+        	RequestDrive requestDrive = new RequestDrive();
+        	ModelAndView modelAndView = new ModelAndView("requestbook", "command",requestDrive);
+        	return modelAndView;
         }
 
         // save
@@ -107,27 +102,20 @@ public class RequestDriveController {
             return modelAndView;
         }
 
-    	@RequestMapping(value="/getrecord",method=RequestMethod.GET)
+        //limit: params.limit,   //页面大小
+        //offset: params.offset,  //页码
+    	@RequestMapping(value="/getrecord",method=RequestMethod.POST)
     	@ResponseBody
-        private Map<String, Object> getRequestRecord() throws IOException {  
+        private Map<String, Object> getrecord(int limit,int offset) throws IOException {  
     		Map<String, Object> map = null;
     		map = new HashMap<String, Object>();
             //得到客户端传递的页码和每页记录数，并转换成int类型  
-            //int pageSize = Integer.parseInt(request.getParameter("pageSize"));  
-            //int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));  
-            //String orderNum = request.getParameter("orderNum");  
-              
             //分页查找商品销售记录，需判断是否有带查询条件  
-            List<RequestDrive> sellRecordList = requestDriveService.getRequestList();//.querySellRecordByPage(pageNumber, pageSize, orderNum);  
-              
-            //将商品销售记录转换成json字符串  
-            //String sellRecordJson = requestDriveService.getSellRecordJson(sellRecordList);  
-            //得到总记录数  
-            //int total = sellRecordService.countSellRecord(orderNum);  
-              
-            //{\"total\":" + total + ",\"rows\":" + sellRecordJson + "}";  
+            //List<RequestDrive> sellRecordList = requestDriveService.getRequestList();
+    		List<RequestDrive> sellRecordList = requestDriveService.getRequestList(limit, offset);  
             //需要返回的数据有总记录数和行数据  
-            map.put("total", sellRecordList.size());
+    		int total = requestDriveService.getRequestNumber();
+            map.put("total", total);
             map.put("rows", sellRecordList);
             return map;  
         }          
@@ -136,11 +124,16 @@ public class RequestDriveController {
         @ModelAttribute("sellerList")
         public Map<String, String> getsellerList()
         {
-        	
            Map<String, String> sellerList = new HashMap<String, String>();
+           ArrayList sList = sellerService.getSellerList();
            
-           sellerList.put("US", "United States");
-           sellerList.put("CH", "China");
+           int size = sList.size();
+           for(int i = 0; i<size; ++i){
+        	   //Seller s = (Seller)sList.get(i);
+               String name = ((Seller)sList.get(i)).getName();
+        	   sellerList.put(name, name);        	   
+           }
+           
            return sellerList;
         }
     	
@@ -149,8 +142,13 @@ public class RequestDriveController {
         public Map<String, String> getCarModelList()
         {
            Map<String, String> carModelList = new HashMap<String, String>();
-           carModelList.put("US", "United States");
-           carModelList.put("CH", "China");
+           ArrayList cList  = carModelService.getCarModelList();
+           int size = cList.size();
+           for(int i = 0; i<size; ++i){
+        	   String name = ( (CarModel)cList.get(i)).getName();
+        	   //CarModel c = (CarModel)cList.get(i);
+        	   carModelList.put(name, name);        	   
+           }
            return carModelList;
         }
 

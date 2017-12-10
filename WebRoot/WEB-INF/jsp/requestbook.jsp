@@ -11,12 +11,12 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
   </head>
-  
   <body>
+  <h2>提交试驾申请</h2>
     <form:form  method="POST" action="/CE/mobile/submitrequest" onsubmit="return check()">
         <table>
             <tr>
-                <td><form:label path="UserName" >username</form:label></td>
+                <td><form:label path="UserName" >userName</form:label></td>
                 <td><form:input id="csname" path="UserName" placeholder="input your name"/></td>
             </tr>
             <tr>
@@ -85,10 +85,10 @@ $(function () {
     );
 });
 
-
 //check input
-function check(){
-    alert("0000");
+function check()
+{
+    //alert("0000");
     //name is not null
     if(csname.value == ""){
         alert("用户名不能为空");
@@ -97,15 +97,17 @@ function check(){
     if(csphonenumber.value==""){ 
         alert("请输入手机号码");
        return false; 
-
     }
+    if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(csphonenumber.value))){ 
+        alert("请输入正确的手机号码"); 
+        return false; 
+    }    
     if(csbooktime.value == ""){
         alert("试驾日期不能为空");
         return false;    
     }
-    return true;
-};  
- 
+    return true; 
+};
 </script>
 </body>
 </html>

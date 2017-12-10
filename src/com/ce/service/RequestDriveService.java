@@ -16,7 +16,9 @@ import com.ce.model.RequestDrive;
 @Service("requestDriveService")
 public class RequestDriveService implements IRequestDriveService{
 	private IRequestDriveDao requestDriveDao;
-	
+	public int getRequestNumber(){
+		return requestDriveDao.getRequestNumber();
+	}
 	public int saveRquest(String userName, String phoneNumber, String carModel, String seller, String bookTime ){
 		requestDriveDao.saveRequest(userName, phoneNumber, carModel, seller, bookTime);
 		return 0;
@@ -24,6 +26,10 @@ public class RequestDriveService implements IRequestDriveService{
 	
 	public ArrayList<RequestDrive> getRequestList(){
 		return requestDriveDao.getRequestList();
+	}
+	
+	public ArrayList<RequestDrive> getRequestList(int pageSize,int pageNumber){
+		return requestDriveDao.getRequestList(pageSize, pageNumber);
 	}
 
 	public IRequestDriveDao getRequestDriveDao() {

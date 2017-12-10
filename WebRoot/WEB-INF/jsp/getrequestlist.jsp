@@ -10,16 +10,15 @@
 <title>requestRecord</title>
 </head>
 <body>
-    <h2>requestList</h2>
+    <h2>查看试驾结果</h2>
 <table class="table table-hover" id="cusTable"  
        data-pagination="true"  
        data-show-refresh="true"  
        data-show-toggle="true"  
        data-showColumns="true">  
        <thead>   
-
        </thead>  
-       <tbody>  
+       <tbody>
        </tbody>  
 </table> 
 
@@ -38,32 +37,32 @@
         $('#cusTable').bootstrapTable('destroy');  
         //初始化表格,动态从服务器加载数据  
         $("#cusTable").bootstrapTable({  
-            method: "get",  //使用get请求到服务器获取数据  
-            url: '/CE/mobile/getrecord', //获取数据的Servlet地址  
+            //method: "get",  //使用get请求到服务器获取数据  
+            method: "post",
+            contentType: "application/x-www-form-urlencoded",
             striped: true,  //表格显示条纹  
+            url: "/CE/mobile/getrecord", //获取数据的Servlet地址  
             pagination: true, //启动分页  
             pageSize: 10,  //每页显示的记录数  
             pageNumber:1, //当前第几页  
-            pageList: [10, 25, 50],  //记录数可选列表  
+            pageList: [10,20],  //记录数可选列表  
             search: false,  //是否启用查询  
-            showColumns: true,  //显示下拉框勾选要显示的列  
+            showColumns: false,  //显示下拉框勾选要显示的列  
             showRefresh: true,  //显示刷新按钮  
+            //sidePagination: "client",
             sidePagination: "server", //表示服务端请求  
+            showToggle:false,
+            dataType:"json",
+            clickToSelect:tru e,
+            height:600,
             //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder  
             //设置为limit可以获取limit, offset, search, sort, order  
-            queryParamsType : "undefined",   
+            queryParamsType : "limit",   
             queryParams: function queryParams(params) {   //设置查询参数  
               var param = {    
-                  pageNumber: params.pageNumber,    
-                  pageSize: params.pageSize,  
                   limit: params.limit,   //页面大小
-                  offset: params.offset,  //页码
-                    phoneNumber: $("#PhoneNumber").val(),
-                    userName: $("#UserName").val(),
-                    seller: $("#Seller").val(),
-                    bookTime: $("#BookTime").val(),
-                    carModel : $("#CarModel").val() 
-              };    
+                  offset: params.offset  //页码
+                };
               return param;                   
             },  
             columns: [{
@@ -82,24 +81,23 @@
                     field: 'bookTime',
                     title: '试驾时间'
                 },]
-/*             onLoadSuccess: function(){  //加载成功时执行  
-              layer.msg("加载成功");
-              alert("加载成功");
-            },  
-            onLoadError: function(){  //加载失败时执行  
-              layer.msg("加载数据失败", {time : 1500, icon : 2});  
-              alert("加载数据失败");
-            }   */
           });  
       }  
   
-      $(document).ready(function () { 
-            //alert("JS初始化加载");     
+      $(document).ready(function () {
           //调用函数，初始化表格  
           initTable();    
           //当点击查询按钮的时候执行  
           $("#search").bind("click", initTable);  
-      }); 
+      });
+      
+       $(".search").click(function(){
+           var searchArgs={
+                name:$("input[name='name']").val(),
+                age:$("input[name='age']").val()
+           }
+           bstpTable.inint(searchArgs)
+       })
 
 </script>
 </body>
