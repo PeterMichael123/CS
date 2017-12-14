@@ -1,5 +1,8 @@
 package com.ce.controller;
 
+//jdbc:mysql://127.0.0.1:3306/carsell?useUnicode=true&characterEncoding=utf8
+//http://39.106.165.11:8080/
+//jdbc:mysql://39.106.165.11:3306/carsell?useUnicode=true&characterEncoding=utf8
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;

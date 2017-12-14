@@ -53,7 +53,7 @@
             sidePagination: "server", //表示服务端请求  
             showToggle:false,
             dataType:"json",
-            clickToSelect:tru e,
+            clickToSelect:true,
             height:600,
             //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder  
             //设置为limit可以获取limit, offset, search, sort, order  
@@ -90,14 +90,6 @@
           //当点击查询按钮的时候执行  
           $("#search").bind("click", initTable);  
       });
-      
-       $(".search").click(function(){
-           var searchArgs={
-                name:$("input[name='name']").val(),
-                age:$("input[name='age']").val()
-           }
-           bstpTable.inint(searchArgs)
-       })
 
 </script>
 </body>

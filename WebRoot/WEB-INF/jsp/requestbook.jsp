@@ -27,7 +27,6 @@
                 <td><form:label path="CarModel">carModel</form:label></td>
                 <td>
                 <form:select path="CarModel">
-                    <!--<form:option value="NONE" label="Select CarModel" /> -->
                     <form:options items="${carModelList}" />
                </form:select>
                </td>
@@ -35,7 +34,6 @@
             <tr>
                 <td><form:label path="Seller">seller</form:label></td>
                 <td><form:select path="Seller">
-                        <!--<form:option value="NONE" label="Select Seller" />-->
                         <form:options items="${sellerList}" />
                     </form:select>
                 </td>
@@ -98,10 +96,10 @@ function check()
         alert("请输入手机号码");
        return false; 
     }
-    if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(csphonenumber.value))){ 
+/*     if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(csphonenumber.value))){ 
         alert("请输入正确的手机号码"); 
         return false; 
-    }    
+    }  */   
     if(csbooktime.value == ""){
         alert("试驾日期不能为空");
         return false;    
